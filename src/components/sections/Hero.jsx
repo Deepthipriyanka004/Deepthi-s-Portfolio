@@ -7,7 +7,6 @@ import HeroBgAnimation from "../HeroBgAnimation";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GithubIcon from "@mui/icons-material/GitHub";
 import EnvelopeIcon from "@mui/icons-material/Mail";
-import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import {
   headContainerAnimation,
@@ -20,6 +19,7 @@ const SocialMediaIcons = styled.div`
   display: flex;
   margin-top: 1rem;
 `;
+
 const SocialMediaIcon = styled.a`
   display: inline-block;
   margin: 0 1rem;
@@ -48,6 +48,7 @@ const HeroContainer = styled.div`
 
   clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 95%, 0 100%);
 `;
+
 const HeroInnerContainer = styled.div`
   position: relative;
   display: flex;
@@ -60,6 +61,7 @@ const HeroInnerContainer = styled.div`
     flex-direction: column;
   }
 `;
+
 const HeroLeftContainer = styled.div`
   width: 100%;
   order: 1;
@@ -72,6 +74,7 @@ const HeroLeftContainer = styled.div`
     align-items: center;
   }
 `;
+
 const HeroRightContainer = styled.div`
   width: 100%;
   order: 2;
@@ -148,29 +151,12 @@ const SubTitle = styled.div`
   }
 `;
 
-const ResumeButton = styled.a`
-  -webkit-appearance: button;
-  -moz-appearance: button;
-  appearance: button;
-  text-decoration: none;
-
+const ResumeButton = styled.button`
   width: 85%;
   max-width: 300px;
   text-align: center;
   padding: 16px 0;
-
-  background: hsla(271, 100%, 50%, 1);
   background: linear-gradient(
-    225deg,
-    hsla(271, 100%, 50%, 1) 0%,
-    hsla(294, 100%, 50%, 1) 100%
-  );
-  background: -moz-linear-gradient(
-    225deg,
-    hsla(271, 100%, 50%, 1) 0%,
-    hsla(294, 100%, 50%, 1) 100%
-  );
-  background: -webkit-linear-gradient(
     225deg,
     hsla(271, 100%, 50%, 1) 0%,
     hsla(294, 100%, 50%, 1) 100%
@@ -179,20 +165,21 @@ const ResumeButton = styled.a`
   border-radius: 20px;
   font-weight: 600;
   font-size: 20px;
+  border: none;
+  cursor: pointer;
+  color: white;
 
-     &:hover {
-        transform: scale(1.05);
+  &:hover {
+    transform: scale(1.05);
     transition: all 0.4s ease-in-out;
-    box-shadow:  20px 20px 60px #1F2634,
+    box-shadow: 20px 20px 60px #1F2634;
     filter: brightness(1);
-    }    
-    
-    
-    @media (max-width: 640px) {
-        padding: 12px 0;
-        font-size: 18px;
-    } 
-    color: white;
+  }
+
+  @media (max-width: 640px) {
+    padding: 12px 0;
+    font-size: 18px;
+  }
 `;
 
 const Img = styled.img`
@@ -224,7 +211,6 @@ const HeroBg = styled.div`
   padding: 0 30px;
   top: 50%;
   left: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
 
   @media (max-width: 960px) {
@@ -234,6 +220,13 @@ const HeroBg = styled.div`
 `;
 
 const Hero = () => {
+  const handleResumeButtonClick = () => {
+    document.getElementById("Contact")?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+  
+
   return (
     <div id="About">
       <HeroContainer>
@@ -267,28 +260,25 @@ const Hero = () => {
                 <SubTitle>{Bio.description}</SubTitle>
               </motion.div>
               <SocialMediaIcons>
-        
-          <SocialMediaIcon href={Bio.linkedin} target="display">
-            <LinkedInIcon />
-          </SocialMediaIcon>
-          <SocialMediaIcon href={Bio.github} target="display">
-            <GithubIcon />
-          </SocialMediaIcon>
-          <SocialMediaIcon href={Bio.mail} target="display">
-            <EnvelopeIcon />
-          </SocialMediaIcon>
-        </SocialMediaIcons>
-        <br/>
+                <SocialMediaIcon href={Bio.linkedin} target="display">
+                  <LinkedInIcon />
+                </SocialMediaIcon>
+                <SocialMediaIcon href={Bio.github} target="display">
+                  <GithubIcon />
+                </SocialMediaIcon>
+                <SocialMediaIcon href={Bio.mail} target="display">
+                  <EnvelopeIcon />
+                </SocialMediaIcon>
+              </SocialMediaIcons>
+              <br />
 
-              <ResumeButton href={Bio.resume} target="_blank">
+              <ResumeButton onClick={handleResumeButtonClick}>
                 Hire Me
               </ResumeButton>
             </HeroLeftContainer>
             <HeroRightContainer>
               <motion.div {...headContentAnimation}>
-                
-                  <Img src={HeroImg} alt="Deepthi" />
-                
+                <Img src={HeroImg} alt="Profile" />
               </motion.div>
             </HeroRightContainer>
           </HeroInnerContainer>

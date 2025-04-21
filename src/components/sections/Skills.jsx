@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { skills } from "../../data/constants";
-import { Tilt } from "react-tilt";
 
 const Container = styled.div`
-display: flex;
-flex-direction: column;
-justify-content-center;
-position: relative;
-z-index: 1;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  align-items: center;
 `;
+
 const Wrapper = styled.div`
   position: relative;
   display: flex;
@@ -20,9 +21,6 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 1100px;
   gap: 12px;
-  @media (max-width: 960px) {
-    flex-direction: column;
-  }
 `;
 
 const Title = styled.div`
@@ -31,10 +29,6 @@ const Title = styled.div`
   font-weight: 600;
   margin-top: 20px;
   color: ${({ theme }) => theme.text_primary};
-  @media (max-width: 768px) {
-    margin-top: 12px;
-    font-size: 32px;
-  }
 `;
 
 const Desc = styled.div`
@@ -42,9 +36,6 @@ const Desc = styled.div`
   text-align: center;
   font-weight: 600;
   color: ${({ theme }) => theme.text_secondary};
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
 `;
 
 const SkillsContainer = styled.div`
@@ -55,6 +46,7 @@ const SkillsContainer = styled.div`
   gap: 50px;
   justify-content: center;
 `;
+
 const Skill = styled.div`
   width: 100%;
   max-width: 500px;
@@ -63,16 +55,6 @@ const Skill = styled.div`
   box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
   border-radius: 16px;
   padding: 18px 36px;
-
-  @media (max-width: 768px) {
-    max-width: 400px;
-    padding: 10px 36px;
-  }
-
-  @media (max-width: 500px) {
-    max-width: 330px;
-    padding: 10px 36px;
-  }
 `;
 
 const SkillTitle = styled.div`
@@ -90,7 +72,8 @@ const SkillList = styled.div`
   gap: 12px;
   margin-bottom: 20px;
 `;
-const SkillItem = styled.div`
+
+const SkillItem = styled(motion.div)`
   font-size: 16px;
   font-weight: 400;
   color: ${({ theme }) => theme.text_primary + 80};
@@ -101,15 +84,7 @@ const SkillItem = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-  @media (max-width: 500px) {
-    font-size: 14px;
-    padding: 6px 12px;
-  }
+  position: relative;
 `;
 
 const SkillImage = styled.img`
@@ -117,35 +92,42 @@ const SkillImage = styled.img`
   height: 24px;
 `;
 
+const floatingAnimation = (index) => ({
+  x: [0, Math.random() * 20 - 10, Math.random() * 20 - 10, 0], 
+  y: [0, Math.random() * 15 - 7, Math.random() * 15 - 7, 0], 
+  transition: {
+    duration: 1.2, 
+    ease: "easeInOut",
+    repeat: Infinity,
+    repeatType: "mirror",
+    delay: Math.random() * 1, 
+  },
+});
+
+
 const Skills = () => {
   return (
     <Container id="Skills">
       <Wrapper>
         <Title>Skills</Title>
-        <Desc
-          style={{
-            marginBottom: "40px",
-          }}
-        >
-          Here are some of my skills on which I have been working on for the
-          past 3 years.
-        </Desc>
+        <Desc>Here are some of my skills on which I have been working on for the past 3 years.</Desc>
 
         <SkillsContainer>
           {skills.map((skill, index) => (
-            <Tilt>
-              <Skill key={`skill-${index}`}>
-                <SkillTitle>{skill.title}</SkillTitle>
-                <SkillList>
-                  {skill.skills.map((item, index_x) => (
-                    <SkillItem key={`skill-x-${index_x}`}>
-                      <SkillImage src={item.image} />
-                      {item.name}
-                    </SkillItem>
-                  ))}
-                </SkillList>
-              </Skill>
-            </Tilt>
+            <Skill key={`skill-${index}`}>
+              <SkillTitle>{skill.title}</SkillTitle>
+              <SkillList>
+                {skill.skills.map((item, index_x) => (
+                  <SkillItem
+                    key={`skill-x-${index_x}`}
+                    animate={floatingAnimation(index_x)}
+                  >
+                    <SkillImage src={item.image} />
+                    {item.name}
+                  </SkillItem>
+                ))}
+              </SkillList>
+            </Skill>
           ))}
         </SkillsContainer>
       </Wrapper>
